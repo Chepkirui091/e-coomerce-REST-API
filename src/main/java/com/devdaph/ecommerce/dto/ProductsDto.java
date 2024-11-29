@@ -3,6 +3,7 @@ package com.devdaph.ecommerce.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,15 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItemDto {
+public class ProductsDto {
 
     private Long id;
-    private int quantity;
+    private String name;
+    private String description;
     private BigDecimal price;
-    private String status;
+    private String imageUrl;
+    private CategoryDto category;
     private UserDto user;
-    private ProductsDto products;
     private LocalDateTime createdAt;
+
 }

@@ -18,6 +18,6 @@ public class CategoryDto {
 
     private Long id;
     private String name;
-    private List<ProductDto> productDtoList;
+    private List<ProductsDto> productDtoList;
 
 }
