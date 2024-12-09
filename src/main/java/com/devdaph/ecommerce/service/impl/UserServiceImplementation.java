@@ -4,6 +4,7 @@ import com.devdaph.ecommerce.dto.LoginRequest;
 import com.devdaph.ecommerce.dto.Response;
 import com.devdaph.ecommerce.dto.UserDto;
 import com.devdaph.ecommerce.entity.User;
+import com.devdaph.ecommerce.enums.UserRole;
 import com.devdaph.ecommerce.mapper.EntityDtoMapper;
 import com.devdaph.ecommerce.repository.UserRepo;
 import com.devdaph.ecommerce.security.JwtUtils;
@@ -26,7 +27,29 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public Response registerUSer(UserDto registrationRequest) {
-        return null;
+        UserRole role = UserRole.USER;
+
+        if (registrationRequest.getRole() != null && registrationRequest.getRole().equalsIgnoreCase("admin")) {
+            role = UserRole.ADMIN;
+        }
+
+        User user = User.builder().build()
+                .name(registrationRequest.getName())
+                .email(registrationRequest.getEmail())
+                .password(passwordEncoder.encode(registrationRequest.getPassword()))
+                .password(registrationRequest.getPassword())
+                .role(role)
+                .build();
+        User savedUSer = userRepo.save(user);
+
+        UserDto userDto = entityDtoMapper.mapUSerToUserDto(savedUSer);
+
+        return Response.builder()
+                .status(200)
+                .message("USer Successfully Added")
+                .user(userDto)
+                .build();
+
     }
 
     @Override
